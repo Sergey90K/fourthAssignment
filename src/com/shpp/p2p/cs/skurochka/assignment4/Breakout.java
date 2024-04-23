@@ -51,6 +51,9 @@ public class Breakout extends WindowProgram {
     /** Initial velocity along the y-axis. */
     private static final double STARTING_VELOCITY_ALONG_Y_AXIS = 3;
 
+    /** Variable to enable the test mode. */
+    private static final boolean TEST_MODE = false;
+
     //A paddle for batting the ball.
     private GRect paddle = null;
     // A ball for the game.
@@ -74,6 +77,8 @@ public class Breakout extends WindowProgram {
         moveTheBall();
         // Display the final caption on the screen.
         drawFinalGreeting();
+        // A method that draws lines to test a program.
+        drawTestLine(TEST_MODE);
     }
 
     /*
@@ -97,7 +102,7 @@ public class Breakout extends WindowProgram {
         int numberAttemptsToPlay = NTURNS;
         double startDx = getVx();
         double startDy = STARTING_VELOCITY_ALONG_Y_AXIS;
-        while (numberAttemptsToPlay > 0 && numberOfBricksInTheGame > 0) {
+        while (numberAttemptsToPlay > 0 && numberOfBricksInTheGame > 0 && !TEST_MODE) {
             ball.move(startDx, startDy);
             startDx = pushingOffTheWalls(startDx);
             startDy = workingOutTheMovementAlongTheAxisY(startDy);
@@ -407,5 +412,30 @@ public class Breakout extends WindowProgram {
         if (PADDLE_WIDTH / 2.0 < mouseEvent.getX() && (getWidth() - PADDLE_WIDTH / 2.0) > mouseEvent.getX()) {
             paddle.setLocation(mouseEvent.getX() - PADDLE_WIDTH / 2.0, paddle.getY());
         }
+    }
+
+    /*
+     * A method for drawing test lines.
+     * Accepts a boolean value as a parameter.
+     * If the parameter is true, two lines are drawn, one horizontally and the other vertically.
+     * */
+    private void drawTestLine(boolean testMode) {
+        if (testMode) {
+            drawOneLine(getWidth() / 2.0, 0.0, getWidth() / 2.0, getHeight());
+            drawOneLine(0.0, getHeight() / 2.0, getWidth(), getHeight() / 2.0);
+        }
+    }
+
+    /*
+     * A method that has a single line.
+     * The method accepts starting and finishing parameters X and Y.
+     * In the middle, a GLine object is created, into which the input parameters of the method are passed,
+     * and then set to red.
+     * The final step is to add the line to the screen composition.
+     * */
+    private void drawOneLine(double startX, double startY, double finishX, double finishY) {
+        GLine gLine = new GLine(startX, startY, finishX, finishY);
+        gLine.setColor(Color.RED);
+        add(gLine);
     }
 }
