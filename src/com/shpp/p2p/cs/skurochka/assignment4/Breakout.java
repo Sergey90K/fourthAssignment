@@ -289,31 +289,19 @@ public class Breakout extends WindowProgram {
      * */
     private GObject getCollidingObject() {
         GObject cornerObject = getElementAt(ball.getX(), ball.getY());
-        if (cornerObject == paddle) {
-            return null;
-        }
+        if (cornerObject == paddle) { return null; }
         if (cornerObject == null) {
             cornerObject = getElementAt(ball.getX() + (2 * BALL_RADIUS), ball.getY());
-            if (cornerObject == paddle) {
-                return null;
-            }
+            if (cornerObject == paddle) { return null; }
             if (cornerObject == null) {
                 cornerObject = getElementAt(ball.getX(), ball.getY() + (2 * BALL_RADIUS));
                 if (cornerObject == null) {
                     cornerObject = getElementAt(ball.getX() + (2 * BALL_RADIUS),
                             ball.getY() + (2 * BALL_RADIUS));
-                    if (cornerObject == null) {
-                        return null;
-                    } else return cornerObject;
-                } else {
-                    return cornerObject;
                 }
-            } else {
-                return cornerObject;
             }
-        } else {
-            return cornerObject;
         }
+        return cornerObject;
     }
 
     /*
